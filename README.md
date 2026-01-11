@@ -61,7 +61,7 @@ Campus Connect is a modern collaboration platform built with Next.js and Node.js
 
 ## Project Structure
 
-```
+\`\`\`
 campus-connect/
 ├── app/                           # Next.js App Router
 │   ├── layout.tsx                # Root layout
@@ -80,12 +80,12 @@ campus-connect/
 │   └── server.js                 # Express API server
 ├── public/                       # Static assets
 └── package.json
-```
+\`\`\`
 
 ## Database Schema
 
 ### Users
-```javascript
+\`\`\`javascript
 {
   name: String,
   email: String (unique),
@@ -93,10 +93,10 @@ campus-connect/
   role: String (default: "member"),
   createdAt: Date
 }
-```
+\`\`\`
 
 ### Teams
-```javascript
+\`\`\`javascript
 {
   name: String,
   description: String,
@@ -104,10 +104,10 @@ campus-connect/
   members: [ObjectId] (Users),
   createdAt: Date
 }
-```
+\`\`\`
 
 ### Projects
-```javascript
+\`\`\`javascript
 {
   name: String,
   description: String,
@@ -115,10 +115,10 @@ campus-connect/
   tasks: [ObjectId] (Tasks),
   createdAt: Date
 }
-```
+\`\`\`
 
 ### Tasks
-```javascript
+\`\`\`javascript
 {
   title: String,
   description: String,
@@ -128,20 +128,20 @@ campus-connect/
   dueDate: Date,
   createdAt: Date
 }
-```
+\`\`\`
 
 ### Comments
-```javascript
+\`\`\`javascript
 {
   text: String,
   author: ObjectId (User),
   task: ObjectId (Task),
   createdAt: Date
 }
-```
+\`\`\`
 
 ### Activity
-```javascript
+\`\`\`javascript
 {
   action: String,
   user: ObjectId (User),
@@ -150,7 +150,7 @@ campus-connect/
   description: String,
   createdAt: Date
 }
-```
+\`\`\`
 
 ## API Endpoints
 
@@ -190,50 +190,50 @@ campus-connect/
 ### Backend Setup
 
 1. **Clone the repository**
-   ```bash
+   \`\`\`bash
    git clone <repository-url>
    cd campus-connect
-   ```
+   \`\`\`
 
 2. **Install dependencies**
-   ```bash
+   \`\`\`bash
    npm install
-   ```
+   \`\`\`
 
 3. **Configure environment variables**
-   ```bash
+   \`\`\`bash
    cp .env.example .env
-   ```
+   \`\`\`
    
    Update `.env` with:
-   ```
+   \`\`\`
    MONGODB_URI=mongodb://localhost:27017/campus-connect
    JWT_SECRET=your-secret-key-here
    PORT=5000
-   ```
+   \`\`\`
 
 4. **Start MongoDB**
-   ```bash
+   \`\`\`bash
    # If using local MongoDB
    mongod
-   ```
+   \`\`\`
 
 5. **Run backend server**
-   ```bash
+   \`\`\`bash
    npm run backend:dev
-   ```
+   \`\`\`
 
 ### Frontend Setup
 
 1. **Install frontend dependencies** (already included)
-   ```bash
+   \`\`\`bash
    npm install
-   ```
+   \`\`\`
 
 2. **Start development server**
-   ```bash
+   \`\`\`bash
    npm run dev
-   ```
+   \`\`\`
 
 3. **Open browser**
    Navigate to `http://localhost:3000`
@@ -268,7 +268,7 @@ campus-connect/
 
 ## Architecture Diagram
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────┐
 │              CLIENT LAYER (Browser)                  │
 ├─────────────────────────────────────────────────────┤
@@ -303,11 +303,11 @@ campus-connect/
 │  ├─ comments                                         │
 │  └─ activities                                       │
 └─────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ## Data Flow
 
-```
+\`\`\`
 User Action (Task Creation)
 │
 ├─→ Frontend Validation
@@ -327,7 +327,7 @@ User Action (Task Creation)
 │
 └─→ Return Response
     └─ Frontend updates UI optimistically
-```
+\`\`\`
 
 ## Security Features
 

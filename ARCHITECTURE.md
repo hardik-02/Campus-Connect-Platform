@@ -4,7 +4,7 @@
 
 Campus Connect is built on a modern three-tier architecture with clear separation of concerns:
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────┐
 │         Presentation Layer (Next.js)             │
 │  React Components, Pages, UI Logic              │
@@ -19,13 +19,13 @@ Campus Connect is built on a modern three-tier architecture with clear separatio
 │         Data Layer (MongoDB)                     │
 │  Collections, Indexes, Relationships            │
 └─────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ## Components
 
 ### Frontend Architecture
 
-```
+\`\`\`
 app/
 ├── layout.tsx              # Root layout with metadata
 ├── globals.css             # Tailwind configuration
@@ -47,32 +47,32 @@ components/
 │   ├── tabs.tsx
 │   └── ...
 └── auth-context.tsx       # Auth state management
-```
+\`\`\`
 
 ### Key Frontend Concepts
 
 **Authentication Flow**:
-```
+\`\`\`
 User → Signup/Login Page
      → API Call to /api/auth/signup or /api/auth/login
      → Receive JWT Token
      → Store in localStorage
      → AuthContext updates
      → Redirect to /dashboard
-```
+\`\`\`
 
 **Data Fetching Pattern**:
-```
+\`\`\`
 Component Mount
      → Check localStorage for token
      → If no token, redirect to /login
      → Fetch data from API with JWT header
      → Update local state
      → Render component
-```
+\`\`\`
 
 **Navigation Structure**:
-```
+\`\`\`
 / (Landing)
 ├── /login
 ├── /signup
@@ -84,11 +84,11 @@ Component Mount
 │               └── Tasks Kanban
 └── /project/[projectId] (protected)
     └── Task Details & Comments
-```
+\`\`\`
 
 ### Backend Architecture
 
-```
+\`\`\`
 backend/server.js
 ├── Middleware
 │   ├── cors()
@@ -110,34 +110,34 @@ backend/server.js
     ├── Task Routes (/api/tasks/*)
     ├── Comment Routes (/api/comments/*)
     └── Activity Routes (/api/activity/*)
-```
+\`\`\`
 
 ### Authentication Architecture
 
 **JWT Implementation**:
-```
+\`\`\`
 1. User Credentials → POST /api/auth/login
 2. Backend validates password
 3. Backend generates JWT (payload: userId, email)
 4. JWT stored in localStorage
 5. All subsequent requests include: Authorization: Bearer <JWT>
 6. Middleware verifies JWT on each request
-```
+\`\`\`
 
 **Token Structure**:
-```javascript
+\`\`\`javascript
 {
   header: { alg: "HS256", typ: "JWT" },
   payload: { userId: "...", email: "..." },
   signature: "..." // signed with JWT_SECRET
 }
-```
+\`\`\`
 
 **Expiration**: 24 hours
 
 ### Database Schema Relationships
 
-```
+\`\`\`
 User
 ├── Created: Team (as leader)
 ├── Member of: Team (in members array)
@@ -168,14 +168,14 @@ Activity
 ├── Performed by: User
 ├── On: Team
 ├── Related to: Task (optional)
-```
+\`\`\`
 
 ## Request/Response Flow
 
 ### Example: Create Task
 
 **Frontend**:
-```javascript
+\`\`\`javascript
 const handleCreateTask = async () => {
   const token = localStorage.getItem("token")
   const response = await axios.post(
@@ -185,10 +185,10 @@ const handleCreateTask = async () => {
   )
   setTasks([...tasks, response.data])
 }
-```
+\`\`\`
 
 **Backend**:
-```javascript
+\`\`\`javascript
 app.post("/api/tasks", verifyToken, async (req, res) => {
   // 1. Verify token (middleware)
   // 2. Extract userId from token
@@ -197,10 +197,10 @@ app.post("/api/tasks", verifyToken, async (req, res) => {
   // 5. Create Activity log
   // 6. Return task to frontend
 })
-```
+\`\`\`
 
 **Database**:
-```javascript
+\`\`\`javascript
 // Task inserted
 db.tasks.insertOne({
   title: "...",
@@ -219,66 +219,66 @@ db.activities.insertOne({
   taskId: ObjectId("..."),
   createdAt: ISODate("...")
 })
-```
+\`\`\`
 
 ## State Management
 
 ### Frontend State Patterns
 
 **Local Component State**:
-```typescript
+\`\`\`typescript
 const [tasks, setTasks] = useState<Task[]>([])
 const [loading, setLoading] = useState(false)
 const [error, setError] = useState("")
-```
+\`\`\`
 
 **Global State** (AuthContext):
-```typescript
+\`\`\`typescript
 interface AuthContextType {
   user: User | null
   token: string | null
   logout: () => void
   isLoading: boolean
 }
-```
+\`\`\`
 
 **Persistent State** (localStorage):
-```javascript
+\`\`\`javascript
 localStorage.setItem("token", jwtToken)
 localStorage.setItem("user", JSON.stringify(userData))
-```
+\`\`\`
 
 ## API Response Format
 
 **Success Response**:
-```javascript
+\`\`\`javascript
 {
   status: 200,
   data: { /* resource data */ }
 }
-```
+\`\`\`
 
 **Error Response**:
-```javascript
+\`\`\`javascript
 {
   status: 400,
   error: "Error message"
 }
-```
+\`\`\`
 
 ## Security Architecture
 
 **Password Security**:
-```
+\`\`\`
 User Input Password
      ↓
 bcryptjs.hash(password, 10)  // Hash with 10 rounds
      ↓
 Store hashed password in DB
-```
+\`\`\`
 
 **Request Authentication**:
-```
+\`\`\`
 Frontend Request
      ↓
 Authorization: Bearer <JWT>
@@ -290,7 +290,7 @@ Verify signature with JWT_SECRET
 Extract userId
      ↓
 Proceed with request
-```
+\`\`\`
 
 ## Scalability Considerations
 
@@ -325,7 +325,7 @@ Proceed with request
 ## Error Handling
 
 **Frontend**:
-```typescript
+\`\`\`typescript
 try {
   const response = await apiCall()
   setData(response.data)
@@ -333,16 +333,16 @@ try {
   setError(error.message)
   // Show error to user
 }
-```
+\`\`\`
 
 **Backend**:
-```javascript
+\`\`\`javascript
 try {
   // Operation
 } catch (error) {
   res.status(400).json({ error: error.message })
 }
-```
+\`\`\`
 
 ## Performance Optimization
 
@@ -364,7 +364,7 @@ try {
 
 ## Testing Strategy (Future)
 
-```
+\`\`\`
 Frontend Tests:
 ├── Unit Tests (Jest)
 │   ├── Component rendering
@@ -390,11 +390,11 @@ Backend Tests:
 └── Load Tests
     ├── Concurrent users
     └── Database stress
-```
+\`\`\`
 
 ## Monitoring & Logging (Future)
 
-```
+\`\`\`
 Application Logs
 ├── Info: User actions, API calls
 ├── Warning: Validation failures, deprecations
@@ -410,7 +410,7 @@ User Analytics
 ├── Feature usage
 ├── User journey analysis
 └── Conversion funnels
-```
+\`\`\`
 
 ---
 
